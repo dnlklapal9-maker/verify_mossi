@@ -124,7 +124,7 @@ export default function VerifyPage() {
 
                     <div className="grid md:grid-cols-2 gap-6">
                       {result.artwork.imageUrl && (
-                        <div className="relative aspect-video rounded-lg overflow-hidden bg-muted">
+                        <div className="relative aspect-video rounded-lg overflow-hidden bg-white">
                           <Image
                             src={result.artwork.imageUrl || "/placeholder.svg"}
                             alt={result.artwork.name}
