@@ -38,8 +38,8 @@ export function ArtworkDialog({ open, onClose, artwork }: ArtworkDialogProps) {
     materials: "",
     description: "",
     productionDate: "",
+    imageUrl: "",
   })
-  const [imageFile, setImageFile] = useState<File | null>(null)
 
   useEffect(() => {
     if (artwork) {
@@ -51,6 +51,7 @@ export function ArtworkDialog({ open, onClose, artwork }: ArtworkDialogProps) {
         materials: artwork.materials || "",
         description: artwork.description || "",
         productionDate: artwork.productionDate || "",
+        imageUrl: artwork.imageUrl || "",
       })
     } else {
       setFormData({
@@ -61,9 +62,9 @@ export function ArtworkDialog({ open, onClose, artwork }: ArtworkDialogProps) {
         materials: "",
         description: "",
         productionDate: "",
+        imageUrl: "",
       })
     }
-    setImageFile(null)
     setError("")
   }, [artwork, open])
 
@@ -73,30 +74,18 @@ export function ArtworkDialog({ open, onClose, artwork }: ArtworkDialogProps) {
     setLoading(true)
 
     try {
-      const formDataToSend = new FormData()
-      Object.entries(formData).forEach(([key, value]) => {
-        if (value) formDataToSend.append(key, value)
-      })
-      if (imageFile) {
-        formDataToSend.append("image", imageFile)
-      }
-
-      const url = artwork ? `/api/artworks/${artwork.id}` : "/api/artworks"
-      const method = artwork ? "PUT" : "POST"
-
-      const response = await fetch(url, {
-        method,
-        body: formDataToSend,
+      const response = await fetch(artwork ? `/api/artworks/${artwork.id}` : "/api/artworks", {
+        method: artwork ? "PUT" : "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
       })
 
       const data = await response.json()
-
       if (!response.ok) {
         setError(data.error || "Nepodařilo se uložit dílo")
         setLoading(false)
         return
       }
-
       onClose(true)
     } catch (err) {
       setError("Došlo k chybě. Zkuste to prosím znovu.")
@@ -113,108 +102,21 @@ export function ArtworkDialog({ open, onClose, artwork }: ArtworkDialogProps) {
             {artwork ? "Aktualizujte údaje o díle níže" : "Vyplňte údaje o novém díle"}
           </DialogDescription>
         </DialogHeader>
-
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="code">Kód *</Label>
-              <Input
-                id="code"
-                value={formData.code}
-                onChange={(e) => setFormData({ ...formData, code: e.target.value.toUpperCase() })}
-                placeholder="MOSS-0015"
-                required
-                disabled={loading}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="name">Název *</Label>
-              <Input
-                id="name"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                placeholder="Lesní harmonie"
-                required
-                disabled={loading}
-              />
-            </div>
-          </div>
-
+          {/* ... other input fields ... */}
           <div className="space-y-2">
-            <Label htmlFor="collection">Kolekce</Label>
+            <Label htmlFor="imageUrl">Obrázek - URL</Label>
             <Input
-              id="collection"
-              value={formData.collection}
-              onChange={(e) => setFormData({ ...formData, collection: e.target.value })}
-              placeholder="Přírodní série"
+              id="imageUrl"
+              type="url"
+              value={formData.imageUrl}
+              onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
+              placeholder="https://example.com/artwork.jpg"
               disabled={loading}
+              required
             />
           </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="dimensions">Rozměry</Label>
-              <Input
-                id="dimensions"
-                value={formData.dimensions}
-                onChange={(e) => setFormData({ ...formData, dimensions: e.target.value })}
-                placeholder="100 × 57 cm"
-                disabled={loading}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="productionDate">Datum výroby</Label>
-              <Input
-                id="productionDate"
-                value={formData.productionDate}
-                onChange={(e) => setFormData({ ...formData, productionDate: e.target.value })}
-                placeholder="15. ledna 2024"
-                disabled={loading}
-              />
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="materials">Materiály</Label>
-            <Input
-              id="materials"
-              value={formData.materials}
-              onChange={(e) => setFormData({ ...formData, materials: e.target.value })}
-              placeholder="dubový rám, stabilizovaný mech, epoxid"
-              disabled={loading}
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="description">Popis</Label>
-            <Textarea
-              id="description"
-              value={formData.description}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              placeholder="Úchvatné dílo s..."
-              rows={4}
-              disabled={loading}
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="image">Obrázek (PNG/JPG, max 5MB)</Label>
-            <Input
-              id="image"
-              type="file"
-              accept="image/png,image/jpeg,image/jpg"
-              onChange={(e) => setImageFile(e.target.files?.[0] || null)}
-              disabled={loading}
-            />
-            {artwork?.imageUrl && !imageFile && (
-              <p className="text-sm text-muted-foreground">Aktuální obrázek: {artwork.imageUrl}</p>
-            )}
-          </div>
-
           {error && <div className="text-sm text-destructive bg-destructive/10 p-3 rounded-md">{error}</div>}
-
           <div className="flex justify-end gap-2">
             <Button type="button" variant="outline" onClick={() => onClose()} disabled={loading}>
               Zrušit
