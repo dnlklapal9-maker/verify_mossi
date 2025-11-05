@@ -1,6 +1,6 @@
 import { SignJWT, jwtVerify } from "jose"
 import { cookies } from "next/headers"
-import bcrypt from "bcrypt"
+import bcrypt from "bcryptjs"
 import { prisma } from "./prisma"
 
 const secret = new TextEncoder().encode(process.env.APP_SECRET || "change_me_to_a_secure_random_string")
