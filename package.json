@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "next build",
-    "dev": "next dev",
-    "lint": "eslint .",
-    "start": "next start"
-  },
+  "postinstall": "npx prisma db push && npx prisma generate && node scripts/seed-safe.ts",
+  "build": "npx prisma generate && next build",
+  "dev": "next dev",
+  "lint": "eslint .",
+  "start": "next start"
+},
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
     "@prisma/client": "latest",

@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client"
-import bcrypt from "bcrypt"
+import bcrypt from "bcryptjs"
 import { mkdir, writeFile } from "fs/promises"
 import { join } from "path"
 
