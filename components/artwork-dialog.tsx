@@ -103,7 +103,83 @@ export function ArtworkDialog({ open, onClose, artwork }: ArtworkDialogProps) {
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* ... other input fields ... */}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="code">Kód *</Label>
+              <Input
+                id="code"
+                value={formData.code}
+                onChange={(e) => setFormData({ ...formData, code: e.target.value.toUpperCase() })}
+                placeholder="MOSS-0015"
+                required
+                disabled={loading}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="name">Název *</Label>
+              <Input
+                id="name"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                placeholder="Forest Harmony"
+                required
+                disabled={loading}
+              />
+            </div>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="collection">Kolekce</Label>
+            <Input
+              id="collection"
+              value={formData.collection}
+              onChange={(e) => setFormData({ ...formData, collection: e.target.value })}
+              placeholder="Nature Series"
+              disabled={loading}
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="dimensions">Rozměry</Label>
+              <Input
+                id="dimensions"
+                value={formData.dimensions}
+                onChange={(e) => setFormData({ ...formData, dimensions: e.target.value })}
+                placeholder="100 × 57 cm"
+                disabled={loading}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="productionDate">Datum výroby</Label>
+              <Input
+                id="productionDate"
+                value={formData.productionDate}
+                onChange={(e) => setFormData({ ...formData, productionDate: e.target.value })}
+                placeholder="2024-01-15"
+                disabled={loading}
+              />
+            </div>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="materials">Materiály</Label>
+            <Input
+              id="materials"
+              value={formData.materials}
+              onChange={(e) => setFormData({ ...formData, materials: e.target.value })}
+              placeholder="oak frame, stabilized moss, epoxy"
+              disabled={loading}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="description">Popis</Label>
+            <Textarea
+              id="description"
+              value={formData.description}
+              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+              placeholder="A stunning piece featuring preserved moss in a handcrafted oak frame, bringing the tranquility of nature indoors."
+              rows={4}
+              disabled={loading}
+            />
+          </div>
           <div className="space-y-2">
             <Label htmlFor="imageUrl">Obrázek - URL</Label>
             <Input
