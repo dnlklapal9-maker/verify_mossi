@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-  "postinstall": "npx prisma db push && npx prisma generate && node scripts/seed.ts",
+  "postinstall": "npx prisma db push && npx prisma generate && npx tsx scripts/seed.ts",
   "build": "npx prisma generate && next build",
   "dev": "next dev",
   "lint": "eslint .",
