@@ -87,7 +87,7 @@ export default function VerifyPage() {
                     <Input
                       id="code"
                       type="text"
-                      placeholder="MOSS-0015"
+                      placeholder="TR2304"
                       value={code}
                       onChange={(e) => setCode(e.target.value.toUpperCase())}
                       disabled={loading}
