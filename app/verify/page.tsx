@@ -70,14 +70,14 @@ export default function VerifyPage() {
           </div>
 
           <div className="text-center space-y-2">
-            <h1 className="text-4xl font-bold text-balance">Ověření certifikátu Mossi</h1>
-            <p className="text-muted-foreground text-lg">Ověřte pravost vašeho uměleckého díla Mossi</p>
+            <h1 className="text-4xl font-bold text-balance">Ověření certifikátu MOSSI.</h1>
+            <p className="text-muted-foreground text-lg">Ověřte pravost vašeho uměleckého díla MOSSI.</p>
           </div>
 
           <Card className="border-2">
             <CardHeader>
               <CardTitle>Zadejte ověřovací kód</CardTitle>
-              <CardDescription>Zadejte jedinečný kód uvedený na vašem certifikátu (např. MOSS-0015)</CardDescription>
+              <CardDescription>Zadejte jedinečný kód uvedený na vašem certifikátu (např. TR2304)</CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-4">
